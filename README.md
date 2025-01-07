@@ -1,6 +1,7 @@
+![FOCUS-icon](https://github.com/user-attachments/assets/350318c1-0c2e-4657-8982-9852991a19b0)
 # 🎯 Focus: A Novel Attention Mechanism for Neural Networks
-![FOCUS-icon](https://github.com/user-attachments/assets/c140c756-f84b-4ddb-9b9d-373ce4a3691b)
 
+ 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
