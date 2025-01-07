@@ -1,68 +1,80 @@
 \documentclass{standalone}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds}
+\usepackage{xcolor}
+\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds,shadows}
 
 \begin{document}
 \begin{tikzpicture}[
-    node distance=2.0cm,
-    box/.style={rectangle,draw,minimum width=2cm,minimum height=1cm,align=center},
-    arrow/.style={->,thick},
-    thick
+    node distance=1.5cm,
+    box/.style={
+        rectangle,
+        draw=blue!50,
+        fill=blue!10,
+        thick,
+        minimum width=2.5cm,
+        minimum height=1.2cm,
+        align=center,
+        rounded corners=5pt,
+        drop shadow
+    },
+    arrow/.style={
+        ->,
+        thick,
+        blue!70
+    },
+    every node/.style={
+        font=\small
+    }
 ]
 
-%--- Nodes: Input to LSTM ---%
-\node[box] (input) {Input\\Sequence};
-\node[box,right=of input] (embed) {Embedding\\Layer};
-\node[box,right=of embed] (lstm) {Bidirectional\\LSTM};
+% Color Palette
+\definecolor{inputcolor}{HTML}{E6F2FF}
+\definecolor{processcolor}{HTML}{CCE5FF}
+\definecolor{outputcolor}{HTML}{B3D9FF}
 
-%--- Focus Mechanism grouping ---%
-% Place the Q, K, V across the top row of the focus mechanism
-\node[box,above right=1.0cm and 1.5cm of lstm] (query) {Query};
-\node[box,right=1.5cm of query] (key) {Key};
-\node[box,right=1.5cm of key] (value) {Value};
+% Input and Embedding
+\node[box, fill=inputcolor] (input) {Input\\Sequence};
+\node[box, fill=processcolor, right=of input] (embed) {Embedding\\Layer};
 
-% Place mu, sigma across the bottom row of the focus mechanism
-\node[box,below=1.0cm of query] (mu) {$\mu$ Head};
-\node[box,below=1.0cm of key] (sigma) {$\sigma$ Head};
+% BiLSTM
+\node[box, fill=processcolor, right=of embed] (lstm) {Bidirectional\\LSTM};
 
-% Gaussian distribution in the middle-right
-\node[box,below right=0.3cm and 0.0cm of value, align=center] (gaussian) {Gaussian\\Distribution};
+% Focus Mechanism Components
+\node[box, fill=processcolor, above right=0.5cm and 1.5cm of lstm] (query) {Query};
+\node[box, fill=processcolor, right=of query] (key) {Key};
+\node[box, fill=processcolor, right=of key] (value) {Value};
 
-% Focused attention output below gaussian
-\node[box,below=1.6cm of gaussian] (attention) {Focus\\Attention};
+% Gaussian Parameters
+\node[box, fill=processcolor, below right=0.5cm and 1.5cm of lstm] (mu) {$\mu$ Head};
+\node[box, fill=processcolor, right=of mu] (sigma) {$\sigma$ Head};
 
-% Final output to the right of attention
-\node[box,right=of attention] (output) {Final\\Output};
+% Focus Distribution
+\node[box, fill=outputcolor, right=2cm of value] (gaussian) {Gaussian\\Distribution};
 
-%--- Draw arrows for the main flow (Input -> Embedding -> LSTM -> Focus Mechanism -> Output) ---%
+% Output
+\node[box, fill=outputcolor, below=2cm of gaussian] (attention) {Focus\\Attention};
+\node[box, fill=outputcolor, right=of attention] (output) {Output};
+
+% Arrows
 \draw[arrow] (input) -- (embed);
 \draw[arrow] (embed) -- (lstm);
-
-%--- LSTM outputs feeding into Focus Mechanism: Q, K, V, mu, sigma ---%
-\draw[arrow] (lstm.north east) |- (query.west);
-\draw[arrow] (lstm.north east) |- (key.west);
-\draw[arrow] (lstm.south east) |- (mu.west);
-\draw[arrow] (lstm.south east) |- (sigma.west);
-\draw[arrow] (lstm.east) -- ++(1.0,0) |- (value.west);
-
-%--- Edges within Focus Mechanism ---%
-\draw[arrow] (query) -- ++(0,-0.8) -| (gaussian.north);
-\draw[arrow] (key) -- ++(0,-1.0) -| (gaussian.north);
-\draw[arrow] (value) -- (gaussian);
-
-\draw[arrow] (mu) -- ++(0,0.8) -| (gaussian.south);
-\draw[arrow] (sigma) -- ++(0,1.0) -| (gaussian.south);
-
-%--- Gaussian -> Focus Attention -> Final Output ---%
+\draw[arrow] (lstm) -- (query);
+\draw[arrow] (lstm) -- (key);
+\draw[arrow] (lstm) -- (value);
+\draw[arrow] (lstm) -- (mu);
+\draw[arrow] (lstm) -- (sigma);
+\draw[arrow] (query) -- (gaussian);
+\draw[arrow] (key) -- (gaussian);
+\draw[arrow] (value) -- (attention);
+\draw[arrow] (mu) -- (gaussian);
+\draw[arrow] (sigma) -- (gaussian);
 \draw[arrow] (gaussian) -- (attention);
 \draw[arrow] (attention) -- (output);
 
-%--- Dashed box around the Focus Mechanism ---%
+% Background box for Focus Mechanism
 \begin{scope}[on background layer]
-\node[rectangle,draw=red,dashed,thick,
-      fit=(query)(key)(value)(mu)(sigma)(gaussian)(attention),
-      inner sep=10pt,
-      label={[align=center]above:\textbf{Focus Mechanism}}] {};
+\node[rectangle,draw=red,dashed,fit=(query)(key)(value)(mu)(sigma)(gaussian),
+      inner sep=0.5cm,label=above:Focus Mechanism] {};
 \end{scope}
 
 \end{tikzpicture}
