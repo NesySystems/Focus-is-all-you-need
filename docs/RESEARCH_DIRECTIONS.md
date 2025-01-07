@@ -79,6 +79,34 @@
 - Semantic creativity mapping
 - Dynamic creative constraint satisfaction
 
+## Research Directions
+
+While the Focus Mechanism already demonstrates improved performance and interpretability in sequence tasks, there remain many exciting avenues for further exploration:
+
+## 1. Transformer Integration
+- **Replacing Self-Attention**: Swap out standard multi-head attention for lens-based heads in a Transformer block.
+- **Parallel Lenses**: Multiple lens centers could be learned for different heads, potentially capturing multiple focal regions.
+
+## 2. Iterative / Multi-Step Focusing
+- **Saccadic Moves**: Inspired by human eye movements, focus could shift sequentially over tokens or patches, refining context each step.
+- **Recurrent Gating**: A small RNN or gating mechanism could re-compute μ and σ after each partial read.
+
+## 3. Multi-Modal & 2D Focusing
+- **Vision**: Directly apply lens weighting to image patches or CNN feature maps. 
+- **Audio**: Sharpen temporal frames in speech recognition, highlight critical pitch or energy peaks.
+
+## 4. Theoretical Analysis
+- **Robustness**: Investigate whether lens distributions help handle noisy or adversarial inputs. 
+- **Convergence**: Study the lens parameter learning dynamics (e.g., how quickly μ, σ converge).
+
+## 5. Memory & Efficiency Optimizations
+- **Sparse Implementations**: Possibly skip computing attention for tokens far from μ or outside a certain σ radius, saving compute resources.
+- **Compression Techniques**: Explore quantization or pruning for lens weights.
+
+## 6. Human-Level Interpretability
+- **Explaining Predictions**: The lens map could become a prime interpretability tool, akin to saliency methods. 
+- **User Feedback**: In interactive systems, users might adjust or correct the lens center, guiding model attention.
+
 ## Collaborative Research Invitation
 
 We view these research directions not as isolated paths, but as an interconnected landscape of discovery. We invite:

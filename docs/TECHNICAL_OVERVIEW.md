@@ -1,70 +1,57 @@
-# Technical Overview of Focus Mechanism
+# Technical Overview
 
-## Architecture Components
+The **Focus Mechanism** merges standard attention with a lens-inspired "focusing" operation, all within a common neural architecture (LSTM or Transformer). Below is a breakdown of the core elements:
 
-### 1. Input Sequence Processing
-- Handles variable-length sequential data
-- Supports multiple input modalities
-- Robust preprocessing and normalization
+## 1. Architecture Outline
 
-### 2. Embedding Layer
-- Transforms raw input into dense vector representations
-- Supports:
-  - Word embeddings
-  - Numeric feature embeddings
-  - Multi-modal embedding strategies
+- **Embedding**: Converts token IDs or features into a 256-dimensional space (configurable).
+- **BiLSTM**: Two layers of bidirectional LSTM with hidden_dim=256 (512 when combined forward/backward).
+- **Focus Layer**: Replaces or augments standard attention by incorporating Gaussian-based focusing.
+- **Final Classifier**: Outputs 2 logits for binary classification (can adapt for multi-class or regression).
 
-### 3. Bidirectional LSTM
-- Captures contextual information from both past and future
-- Mitigates vanishing gradient problem
-- Enables rich, contextual feature extraction
+## 2. Focus Layer Components
 
-### 4. Focus Mechanism Components
+1. **Query/Key/Value**  
+   - Standard Q-K-V projections derived from the hidden states.
+   - Typically multi-head (e.g., 4 heads).
 
-#### Query, Key, Value Heads
-- Dynamically generate context-aware representations
-- Probabilistic mapping of information relevance
-- Adaptive weighting of input features
+2. **Gaussian Parameters (μ, σ)**  
+   - Predicted from the hidden states to locate the "focal center" and "aperture width."
+   - Combined into a lens-based weighting distribution.
 
-#### Gaussian Distribution Heads
-- μ (Mean) Head: Determines focal point
-- σ (Variance) Head: Controls focus spread
-- Enables soft, probabilistic attention
+3. **Combined Distribution**  
+   - Standard attention weights multiplied (element-wise) by the lens distribution.
+   - Normalized via softmax to ensure a valid probability distribution across tokens.
 
-### 5. Focus Attention
-- Combines probabilistic focus with weighted information
-- Produces context-sensitive output
-- Adaptable across different problem domains
+## 3. Training Configuration
 
-## Mathematical Formulation
+| Hyperparameter | Value    |
+|----------------|---------:|
+| Embedding Dim  | 256      |
+| Hidden Dim     | 256      |
+| Layers (LSTM)  | 2        |
+| Dropout        | 0.1      |
+| Bidirectional  | True     |
+| n_heads        | 4        |
+| Loss Function  | CrossEntropy |
+| Optimizer      | AdamW    |
+| LR             | 2e-5     |
+| Weight Decay   | 0.01     |
+| Epochs         | 10       |
 
-### Focus Distribution
-```
-P(x | μ, σ) = (1 / (σ * √(2π))) * exp(-(x - μ)² / (2σ²))
-```
+## 4. Implementation Highlights
 
-### Attention Weights
-```
-Attention(Q, K, V) = softmax((Q * K^T) / √d_k) * V
-```
-
-## Computational Complexity
-- Time Complexity: O(n²)
-- Space Complexity: O(n)
-- Highly optimized for parallel computation
-
-## Advantages
-- Dynamic context adaptation
-- Reduced computational redundancy
-- Interpretable attention mechanisms
-- Flexible across domains
-
-## Potential Limitations
-- Computational intensity for very large sequences
-- Requires careful hyperparameter tuning
-- Potential overfitting with small datasets
-
-## Future Research Directions
-- Quantum-inspired attention mechanisms
-- Multi-modal focus distribution
-- Neuromorphic computing integration
+```python
+class FocusLayer(nn.Module):
+    def __init__(self, hidden_dim, n_heads=4, dropout=0.1):
+        super().__init__()
+        self.query = nn.Linear(hidden_dim, hidden_dim)
+        self.key   = nn.Linear(hidden_dim, hidden_dim)
+        self.value = nn.Linear(hidden_dim, hidden_dim)
+        
+        self.mu_head    = nn.Linear(hidden_dim, 1)
+        self.sigma_head = nn.Linear(hidden_dim, 1)
+        self.n_heads    = n_heads
+        self.dropout    = nn.Dropout(dropout)
+        
+        # optional: layer normalization, multi-head splitting, etc.
