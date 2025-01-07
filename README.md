@@ -147,46 +147,46 @@ Star ⭐ this repo if you find it useful!
 
 ## Focus Mechanism Documentation
 
-### Overview
+## Overview
 
 Welcome to the Focus Mechanism documentation—a comprehensive guide to an innovative neural architecture that reimagines traditional attention. Drawing on principles of camera optics and human cognitive focus, this approach offers sharper, more targeted attention, yielding improvements in both performance and interpretability.
 
-### Quick Links
-- **Project Philosophy**
+## Quick Links
+- **[Project Philosophy](docs/PROJECT_PHILOSOPHY.md)**
   Discover the core ideas and motivations behind the Focus Mechanism, including its lens-inspired origins.
-- **Technical Overview**
+- **[Technical Overview](docs/TECHNICAL_OVERVIEW.md)**
   Dive into the architecture, main components (Gaussian-based focusing, multi-head distribution, etc.), and how they integrate with common deep learning pipelines.
-- **Potential Use Cases**
+- **[Potential Use Cases](docs/POTENTIAL_USE_CASES.md)**
   Learn about real-world domains (NLP, vision, multi-modal tasks) where the Focus Mechanism can offer a decisive edge.
-- **Research Directions**
+- **[Research Directions](docs/RESEARCH_DIRECTIONS.md)**
   Explore future expansions: iterative focusing, Transformer integration, advanced regularization strategies, and more.
 
-### Documentation Details
+## Documentation Details
 
-#### 1. Project Philosophy
+### 1. Project Philosophy
 Located at: `docs/PROJECT_PHILOSOPHY.md`
 Explores the foundational principles, inspirations, and philosophical approach behind the Focus Mechanism.
 
-#### 2. Technical Overview
+### 2. Technical Overview
 Located at: `docs/TECHNICAL_OVERVIEW.md`
 Provides an in-depth look at the architecture, implementation details, and technical specifications.
 
-#### 3. Potential Use Cases
+### 3. Potential Use Cases
 Located at: `docs/POTENTIAL_USE_CASES.md`
 Highlights practical applications across various domains, demonstrating the mechanism's versatility.
 
-#### 4. Research Directions
+### 4. Research Directions
 Located at: `docs/RESEARCH_DIRECTIONS.md`
 Outlines potential future research paths, theoretical explorations, and innovative extensions.
 
-### Installation and Usage
+## Installation and Usage
 
 (Detailed installation instructions to be added)
 
-### Contributing
+## Contributing
 
 We welcome contributions, insights, and collaborations. Please read our contributing guidelines for more information.
 
-### License
+## License
 
 Creative Commons Attribution-NonCommercial 4.0 International
