@@ -1,9 +1,7 @@
 ![FOCUS-icon](https://github.com/user-attachments/assets/350318c1-0c2e-4657-8982-9852991a19b0)
 # 🎯 Focus: A Novel Attention Mechanism for Neural Networks
 
- 
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc/4.0/)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg)](https://pytorch.org/)
 
@@ -19,6 +17,16 @@ Focus is a groundbreaking attention mechanism that revolutionizes how neural net
 - **Efficient Implementation**: Optimized for both training and inference
 - **State-of-the-Art Results**: Outperforms traditional attention mechanisms
 
+## 🏗️ Architecture
+
+![Focus Mechanism Architecture](https://github.com/NesySystems/Focus-is-all-you-need/blob/main/docs/architecture.png?raw=true)
+
+The Focus Mechanism introduces a novel approach to attention by incorporating a Gaussian-based focusing component. Key components include:
+
+1. **Multi-Head Attention**: Parallel attention computation
+2. **Gaussian Focus Window**: Dynamic attention concentration
+3. **Adaptive Weighting**: Content-based focus adjustment
+
 ## 📊 Performance Highlights
 
 - **15% Improvement** in classification accuracy
@@ -29,15 +37,17 @@ Focus is a groundbreaking attention mechanism that revolutionizes how neural net
 ## 🛠 Installation
 
 ```bash
-git clone https://github.com/yourusername/focus-mechanism.git
-cd focus-mechanism
+git clone https://github.com/NesySystems/Focus-is-all-you-need.git
+cd Focus-is-all-you-need
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## 💡 Quick Start
 
 ```python
-from focus_module.models import FocusLSTM
+from focus.models import FocusLSTM
 
 # Initialize the model
 model = FocusLSTM(
@@ -59,8 +69,6 @@ The Focus mechanism introduces a novel approach to attention:
 2. **Gaussian Focus**: Generates a dynamic focus window for each head
 3. **Adaptive Weighting**: Combines attention scores with focus weights
 4. **Content-Aware Processing**: Adjusts focus based on input content
-
-![Focus Mechanism Architecture](focus_module/experiments/figures/focus_architecture.png)
 
 ## 🔬 Technical Innovation
 
@@ -107,8 +115,8 @@ If you use Focus in your research, please cite:
 
 - [Documentation](docs/README.md)
 - [Examples](examples/)
-- [Issue Tracker](https://github.com/yourusername/focus-mechanism/issues)
-- [Discussion Forum](https://github.com/yourusername/focus-mechanism/discussions)
+- [Issue Tracker](https://github.com/NesySystems/Focus-is-all-you-need/issues)
+- [Discussion Forum](https://github.com/NesySystems/Focus-is-all-you-need/discussions)
 
 ## 📄 License
 
