@@ -1,37 +1,59 @@
-\documentclass{standalone}
+\documentclass[border=10pt]{standalone}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds}
+\usepackage{xcolor}
+\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds,shadows}
 
 \begin{document}
 \begin{tikzpicture}[
     node distance=1.5cm,
-    box/.style={rectangle,draw,minimum width=2cm,minimum height=1cm,align=center},
-    arrow/.style={->,thick},
-    thick
+    box/.style={
+        rectangle,
+        draw=blue!50,
+        fill=blue!10,
+        thick,
+        minimum width=2.5cm,
+        minimum height=1.2cm,
+        align=center,
+        rounded corners=5pt,
+        drop shadow
+    },
+    arrow/.style={
+        ->,
+        thick,
+        blue!70
+    },
+    every node/.style={
+        font=\small
+    }
 ]
 
+% Color Palette
+\definecolor{inputcolor}{HTML}{E6F2FF}
+\definecolor{processcolor}{HTML}{CCE5FF}
+\definecolor{outputcolor}{HTML}{B3D9FF}
+
 % Input and Embedding
-\node[box] (input) {Input\\Sequence};
-\node[box,right=of input] (embed) {Embedding\\Layer};
+\node[box, fill=inputcolor] (input) {Input\\Sequence};
+\node[box, fill=processcolor, right=of input] (embed) {Embedding\\Layer};
 
 % BiLSTM
-\node[box,right=of embed] (lstm) {Bidirectional\\LSTM};
+\node[box, fill=processcolor, right=of embed] (lstm) {Bidirectional\\LSTM};
 
 % Focus Mechanism Components
-\node[box,above right=0.5cm and 1.5cm of lstm] (query) {Query};
-\node[box,right=of query] (key) {Key};
-\node[box,right=of key] (value) {Value};
+\node[box, fill=processcolor, above right=0.5cm and 1.5cm of lstm] (query) {Query};
+\node[box, fill=processcolor, right=of query] (key) {Key};
+\node[box, fill=processcolor, right=of key] (value) {Value};
 
 % Gaussian Parameters
-\node[box,below right=0.5cm and 1.5cm of lstm] (mu) {$\mu$ Head};
-\node[box,right=of mu] (sigma) {$\sigma$ Head};
+\node[box, fill=processcolor, below right=0.5cm and 1.5cm of lstm] (mu) {$\mu$ Head};
+\node[box, fill=processcolor, right=of mu] (sigma) {$\sigma$ Head};
 
 % Focus Distribution
-\node[box,right=2cm of value] (gaussian) {Gaussian\\Distribution};
+\node[box, fill=outputcolor, right=2cm of value] (gaussian) {Gaussian\\Distribution};
 
 % Output
-\node[box,below=2cm of gaussian] (attention) {Focus\\Attention};
-\node[box,right=of attention] (output) {Output};
+\node[box, fill=outputcolor, below=2cm of gaussian] (attention) {Focus\\Attention};
+\node[box, fill=outputcolor, right=of attention] (output) {Output};
 
 % Arrows
 \draw[arrow] (input) -- (embed);
