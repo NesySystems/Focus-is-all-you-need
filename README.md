@@ -95,7 +95,7 @@ We're building more than a project—we're crafting the future of intelligent sy
 
 Comprehensive guides available:
 - [Project Philosophy](docs/PROJECT_PHILOSOPHY.md)
-- [Technical Whitepaper](docs/WHITEPAPER.md)
+- [Technical Whitepaper](https://focusisall-e2ccc.web.app/)
 - [Implementation Details](docs/IMPLEMENTATION.md)
 
 ## 📄 License
